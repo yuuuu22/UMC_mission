@@ -1,0 +1,18 @@
+//내가 진행 중인 미션을 진행 완료로 바꾸기
+// PATCH /challenges/:challengeId/complete
+import prisma from './prismaClient.js';
+
+export async function completeChallenge(req, res) {
+  const challengeId = Number(req.params.challengeId);
+
+  try {
+    const updated = await prisma.challenge.update({
+      where: { id: challengeId },
+      data: { status: 'completed' },
+    });
+
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: '도전 완료 처리 실패', detail: err.message });
+  }
+}
