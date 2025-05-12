@@ -1,0 +1,22 @@
+// 특정 지역에 가게 추가하기 API
+
+const stores = []; // 메모리 내 저장소 (예시용)
+
+export function createStore(req, res) {
+  const { name, address, region } = req.body;
+
+  // 기본 유효성 검사 (선택 사항)
+  if (!name || !address || !region) {
+    return res.status(400).json({ error: "모든 필드를 입력하세요." });
+  }
+
+  const newStore = {
+    id: stores.length + 1,
+    name,
+    address,
+    region
+  };
+
+  stores.push(newStore);
+  res.status(201).json(newStore);
+}
